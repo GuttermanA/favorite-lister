@@ -14,7 +14,7 @@ export default class NavBar extends Component {
 
   handleItemClick = (event, { name }) => this.setState({ activeItem: name })
 
-  handleChange = (event, { value }) => this.setState({ searchTerm: value },()=>console.log(this.state))
+  handleChange = (event, { value }) => this.setState({ searchTerm: value })
 
   handleSearch = (event) => {
     this.props.search(this.state.searchTerm)
@@ -33,7 +33,7 @@ export default class NavBar extends Component {
           <Container>
             <Menu.Item as={NavLink} exact to="/" name='home' onClick={this.handleItemClick} />
             <Menu.Item position='right'>
-              <Input icon='search' placeholder='Movie name...' value={this.state.name} onChange={this.handleChange}/>
+              <Input icon='search' placeholder='Movie name...' value={this.state.searchTerm} onChange={this.handleChange}/>
               <NavLink className="ui button" exact to="/results" onClick={this.handleSearch}>Search</NavLink>
             </Menu.Item>
           </Container>
