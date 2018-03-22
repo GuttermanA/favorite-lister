@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import NavBar from './components/NavBar'
+import MovieContainer from './containers/MovieContainer'
+import HomePage from './components/HomePage'
+import { Route } from 'react-router-dom'
 import './App.css';
 
 class App extends Component {
 
   state = {
-    movies:[]
+    searchTerm: ""
   }
 
-  componentDidMount() {
-    this.fetchMovies()
-  }
-
-  fetchMovies() {
-    fetch(`https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&query=star%20wars&language=en-US&api_key=${REACT_APP_API_KEY}`)
-      .then(res => res.json())
-      .then(json => console.log(json))
+  search = (searchTerm) => {
+    this.setState({searchTerm})
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <NavBar search={this.search} searchTerm={this.state.searchTerm}/>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/results" render={() => <MovieContainer searchTerm={this.state.searchTerm}/>}/>
       </div>
     );
   }
