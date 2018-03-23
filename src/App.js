@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import NavBar from "./components/NavBar";
 import MovieContainer from "./containers/MovieContainer";
 import HomePage from "./components/HomePage";
+import UserLists from "./components/UserLists";
 import { Route } from "react-router-dom";
 import "./App.css";
 import { Grid } from "semantic-ui-react";
@@ -29,6 +30,7 @@ class App extends Component {
             <MovieContainer searchTerm={this.state.searchTerm} />
           )}
           />
+        <Route exact path="/lists" component={UserLists} />
 			</div>
 		);
 	}

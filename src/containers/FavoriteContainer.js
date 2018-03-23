@@ -6,10 +6,6 @@ import { Container, Menu, Input, Card } from "semantic-ui-react";
 export default class FavoriteContainer extends Component {
 	state = {};
 
-	componentDidMount() {}
-
-	componentWillReceiveProps(nextProps) {}
-
 	moviesExists() {
 		let movies;
 		if (this.props.favoriteList) {
@@ -23,7 +19,7 @@ export default class FavoriteContainer extends Component {
 	render() {
 		return (
 			<Container>
-				<FavoriteForm />
+				<FavoriteForm favoriteList={this.props.favoriteList} clearFavoriteList={this.props.clearFavoriteList}/>
 				{this.moviesExists()}
 			</Container>
 		);

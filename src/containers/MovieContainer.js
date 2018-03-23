@@ -53,6 +53,10 @@ export default class MovieContainer extends Component {
 		this.fetchMovies(nextProps.searchTerm);
 	}
 
+	clearFavoriteList = () => {
+		this.setState({favoriteList:[]})
+	}
+
 	fetchMovies(searchTerm) {
 		if (searchTerm) {
 			fetch(
@@ -76,7 +80,6 @@ export default class MovieContainer extends Component {
 	}
 
 	render() {
-		// console.log(this.state.movies);
 		const movies = this.state.movies.map(movie => {
 			return <MovieCard key={movie.id} movie={movie} handleAdd={this.addToList} />;
 		});
@@ -84,7 +87,9 @@ export default class MovieContainer extends Component {
 			<Grid columns={2} divided>
 				<Grid.Column width={5}>
 						{this.state.showFaves ? (
-							<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList} />
+							<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList}
+							clearFavoriteList={this.clearFavoriteList}
+								 />
 						) : null}
 				</Grid.Column>
 				<Grid.Column width={11}>
