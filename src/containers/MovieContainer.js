@@ -1,56 +1,52 @@
 import React, { Component } from "react";
 import MovieCard from "../components/MovieCard.js";
-import { Container, Menu, Input, Card } from "semantic-ui-react";
+import FavoriteContainer from "./FavoriteContainer";
+
+import { Container, Menu, Input, Card, Grid } from "semantic-ui-react";
 
 export default class MovieContainer extends Component {
 	state = {
-		movies: [{
-           "vote_count": 7331,
-           "id": 1891,
-           "video": false,
-           "vote_average": 8.3,
-           "title": "The Empire Strikes Back",
-           "popularity": 21.629623,
-           "poster_path": "/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
-           "original_language": "en",
-           "original_title": "The Empire Strikes Back",
-           "genre_ids": [
-               12,
-               28,
-               878
-           ],
-           "backdrop_path": "/amYkOxCwHiVTFKendcIW0rSrRlU.jpg",
-           "adult": false,
-           "overview": "The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
-           "release_date": "1980-05-20"
-       },{
-              "vote_count": 7331,
-              "id": 1891,
-              "video": false,
-              "vote_average": 8.3,
-              "title": "The Empire Strikes Back",
-              "popularity": 21.629623,
-              "poster_path": "/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
-              "original_language": "en",
-              "original_title": "The Empire Strikes Back",
-              "genre_ids": [
-                  12,
-                  28,
-                  878
-              ],
-              "backdrop_path": "/amYkOxCwHiVTFKendcIW0rSrRlU.jpg",
-              "adult": false,
-              "overview": "The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
-              "release_date": "1980-05-20"
-          },
-     ]
+		showFaves: true,
+		favoriteList: [],
+		movies: [
+			{
+				vote_count: 7331,
+				id: 1891,
+				video: false,
+				vote_average: 8.3,
+				title: "The Empire Strikes Back",
+				popularity: 21.629623,
+				poster_path: "/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
+				original_language: "en",
+				original_title: "The Empire Strikes Back",
+				genre_ids: [12, 28, 878],
+				backdrop_path: "/amYkOxCwHiVTFKendcIW0rSrRlU.jpg",
+				adult: false,
+				overview:
+					"The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
+				release_date: "1980-05-20"
+			}
+		]
 	};
 
+	addToList = movieData => {
+		if (!this.state.favoriteList.includes(movieData)) {
+			this.setState({
+				favoriteList: [...this.state.favoriteList, movieData]
+			})
+		}
+	};
 
+	removeFromList = movieData => {
+		let newList = this.state.favoriteList.filter(movie => movie !== movieData)
+		this.setState({
+			favoriteList: newList
+		})
+	}
 
 	componentDidMount() {
 		this.fetchMovies(this.props.searchTerm);
-		console.log(this.state.movies);
+		// console.log(this.state.movies);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -58,15 +54,15 @@ export default class MovieContainer extends Component {
 	}
 
 	fetchMovies(searchTerm) {
-		fetch(
-			`http://localhost:4000/search?${this.generateSearchParams(searchTerm)}`
-		)
-			.then(res => res.json())
-			.then(movies =>
-				this.setState({ movies: movies.results }, () => {
-					console.log(this.state.movies);
-				})
-			);
+		if (searchTerm) {
+			fetch(
+				`http://localhost:4000/search?${this.generateSearchParams(searchTerm)}`
+			)
+				.then(res => res.json())
+				.then(movies =>
+					this.setState({ movies: movies.results })
+				);
+		}
 	}
 
 	generateSearchParams(searchTerm) {
@@ -80,13 +76,23 @@ export default class MovieContainer extends Component {
 	}
 
 	render() {
+		// console.log(this.state.movies);
 		const movies = this.state.movies.map(movie => {
-			return <MovieCard movie={movie} />;
+			return <MovieCard key={movie.id} movie={movie} handleAdd={this.addToList} />;
 		});
 		return (
-			<Container>
-				<Card.Group>{movies}</Card.Group>
-			</Container>
+			<Grid columns={2} divided>
+				<Grid.Column width={5}>
+						{this.state.showFaves ? (
+							<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList} />
+						) : null}
+				</Grid.Column>
+				<Grid.Column width={11}>
+					<Container>
+						<Card.Group>{movies}</Card.Group>
+					</Container>
+				</Grid.Column>
+			</Grid>
 		);
 	}
 }
