@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ListCard from './ListCard'
+import uuid from "uuid";
 import { Container } from "semantic-ui-react";
 // import { NavLink } from "react-router-dom"
 
@@ -30,14 +32,11 @@ export default class UserLists extends Component {
 
 	render() {
     const listBlock =   this.state.userLists.map(list => {
-        console.log(list.title);
-        return <p>{list.title}</p>
+        return <ListCard key={uuid()} list={list}/>
       })
-    console.log("render", this.state.userLists);
 		return (
 			<Container>
-      {this.state.userLists ?
-        listBlock : null }
+      	{listBlock}
 			</Container>
 
 		);

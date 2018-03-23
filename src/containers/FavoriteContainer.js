@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import uuid from "uuid";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteForm from "../components/FavoriteForm.js";
-import { Container, Menu, Input, Card } from "semantic-ui-react";
+import { Container} from "semantic-ui-react";
 
 export default class FavoriteContainer extends Component {
 	state = {};
@@ -10,7 +11,7 @@ export default class FavoriteContainer extends Component {
 		let movies;
 		if (this.props.favoriteList) {
 			movies = this.props.favoriteList.map(movie => {
-				return <MovieCard movie={movie} handleRemove={this.props.handleRemove}/>;
+				return <MovieCard key={uuid()} movie={movie} handleRemove={this.props.handleRemove}/>;
 			});
 			return movies;
 		}

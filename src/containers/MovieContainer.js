@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteContainer from "./FavoriteContainer";
-
-import { Container, Menu, Input, Card, Grid } from "semantic-ui-react";
+import uuid from "uuid";
+import { Container, Card, Grid } from "semantic-ui-react";
 
 export default class MovieContainer extends Component {
 	state = {
@@ -81,7 +81,7 @@ export default class MovieContainer extends Component {
 
 	render() {
 		const movies = this.state.movies.map(movie => {
-			return <MovieCard key={movie.id} movie={movie} handleAdd={this.addToList} />;
+			return <MovieCard key={uuid()} movie={movie} handleAdd={this.addToList} />;
 		});
 		return (
 			<Grid columns={2} divided>

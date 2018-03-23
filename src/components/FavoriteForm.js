@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
-import { NavLink } from "react-router-dom"
 
 export default class FavoriteForm extends Component {
 	state = {
@@ -54,7 +53,6 @@ export default class FavoriteForm extends Component {
 					</Form.Field>
 					<Button type="submit">Submit</Button>
 				</Form>
-				{this.state.createdListTitle ? (<NavLink path='/lists'/>):null}
 			</div>
 
 		);
