@@ -3,6 +3,15 @@ import MovieCard from "../components/MovieCard.js";
 import FavoriteContainer from "./FavoriteContainer";
 import uuid from "uuid";
 import { Container, Card, Grid } from "semantic-ui-react";
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 export default class MovieContainer extends Component {
 	state = {
@@ -79,25 +88,77 @@ export default class MovieContainer extends Component {
 		return query;
 	}
 
+	onDragStart = () => {
+    /*...*/
+  };
+  onDragUpdate = (update) => {
+    console.log(update);
+  }
+  onDragEnd = (result) => {
+		console.log(result);
+		if (!result.destination || result.destination.droppableId !== "list") {
+      return;
+    }
+
+		if (result.source.droppableId === "list") {
+			const favoriteList = reorder(
+	      this.state.favoriteList,
+	      result.source.index,
+	      result.destination.index
+	    );
+
+			this.setState({ favoriteList })
+
+		} else if (result.source.droppableId === "search-results") {
+			let foundMovie = this.state.movies.find(movie => movie.id === result.draggableId)
+			if (!this.state.favoriteList.includes(foundMovie)) {
+				let newArray = [...this.state.favoriteList]
+				newArray.splice(result.destination.index, 0, foundMovie)
+				this.setState({
+					favoriteList: newArray
+				})
+			}
+		}
+  };
+
 	render() {
-		const movies = this.state.movies.map(movie => {
-			return <MovieCard key={uuid()} movie={movie} handleAdd={this.addToList} />;
-		});
+		const movies = this.state.movies.map((movie, index) => {
+			return (
+				<MovieCard key={uuid()} movie={movie} handleAdd={this.addToList} index={index} id={movie.id}/>
+			)
+		})
 		return (
-			<Grid columns={2} divided>
-				<Grid.Column width={5}>
-						{this.state.showFaves ? (
-							<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList}
+			<DragDropContext
+        onDragStart={this.onDragStart}
+        onDragUpdate={this.onDragUpdate}
+        onDragEnd={this.onDragEnd}
+      >
+				<Grid columns={2} divided>
+					<Grid.Column width={5}>
+						<FavoriteContainer
+							favoriteList={this.state.favoriteList}
+							handleRemove={this.removeFromList}
 							clearFavoriteList={this.clearFavoriteList}
-								 />
-						) : null}
-				</Grid.Column>
-				<Grid.Column width={11}>
-					<Container>
-						<Card.Group>{movies}</Card.Group>
-					</Container>
-				</Grid.Column>
-			</Grid>
+						/>
+					</Grid.Column>
+					<Grid.Column width={11}>
+						<Droppable droppableId="search-results" type="MOVIE">
+						  {(provided, snapshot) => (
+						    <div
+						      ref={provided.innerRef}
+
+						      {...provided.droppableProps}
+						    >
+								<Container>
+									<Card.Group>{movies}</Card.Group>
+								</Container>
+								{provided.placeholder}
+						    </div>
+						  )}
+						</Droppable>;
+					</Grid.Column>
+				</Grid>
+			</DragDropContext>
 		);
 	}
 }

@@ -4,6 +4,7 @@ import MovieContainer from "./containers/MovieContainer";
 import HomePage from "./components/HomePage";
 import UserLists from "./components/UserLists";
 import { Route } from "react-router-dom";
+
 import "./App.css";
 
 
@@ -15,6 +16,8 @@ class App extends Component {
 	search = searchTerm => {
 		this.setState({ searchTerm });
 	};
+
+
 
 	render() {
 		return (
