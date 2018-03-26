@@ -20,6 +20,17 @@
   height: 100%;
 }
 
+.flex-list {
+  min-height: 100vh;
+  /* like display:flex but will allow bleeding over the window width */
+  /* min-width: 100vw; */
+  display: inline-block;
+}
+
+.parent-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
 .App-title {
   font-size: 1.5em;

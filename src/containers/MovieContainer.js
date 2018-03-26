@@ -92,10 +92,10 @@ export default class MovieContainer extends Component {
     /*...*/
   };
   onDragUpdate = (update) => {
-    console.log(update);
+    // console.log(update);
   }
   onDragEnd = (result) => {
-		console.log(result);
+		// console.log(result);
 		if (!result.destination || result.destination.droppableId !== "list") {
       return;
     }
@@ -142,7 +142,7 @@ export default class MovieContainer extends Component {
 						/>
 					</Grid.Column>
 					<Grid.Column width={11}>
-						<Droppable droppableId="search-results" type="MOVIE">
+						<Droppable droppableId="search-results" type="MOVIE" isDropDisabled>
 						  {(provided, snapshot) => (
 						    <div
 						      ref={provided.innerRef}
