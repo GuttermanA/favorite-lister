@@ -18,7 +18,7 @@ const MovieCard = props => {
   };
 
   return (
-    <Draggable draggableId={uuid()} type="list" index={props.index}>
+    <Draggable key={props.movie.id} draggableId={props.movie.id} type="list" index={props.index}>
       {(provided, snapshot) => (
         <div>
           <div
@@ -26,7 +26,7 @@ const MovieCard = props => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            <Card onClick={handleClick}>
+            <Card >
               <Image src={poster} />
             </Card>
           </div>

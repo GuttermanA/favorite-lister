@@ -84,9 +84,10 @@ export default class FavoriteContainer extends Component {
           clearFavoriteList={this.clearFavoriteList}
         />
 
-        <Droppable droppableId="droppable" type="list">
+			<Droppable droppableId="favList">
           {(provided, snapshot) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div ref={provided.innerRef} {...provided.droppableProps}
+							style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}>
               {movies}
               {provided.placeholder}
             </div>
