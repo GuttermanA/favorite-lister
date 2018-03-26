@@ -3,8 +3,11 @@ import MovieCard from "../components/MovieCard.js";
 import FavoriteContainer from "./FavoriteContainer";
 import uuid from "uuid";
 import { Container, Card, Grid } from "semantic-ui-react";
+import { DragDropContextProvider } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend';
 
-export default class MovieContainer extends Component {
+
+class MovieContainer extends Component {
 	state = {
 		showFaves: true,
 		favoriteList: [],
@@ -81,23 +84,27 @@ export default class MovieContainer extends Component {
 
 	render() {
 		const movies = this.state.movies.map(movie => {
-			return <MovieCard key={uuid()} movie={movie} handleAdd={this.addToList} />;
+			return <MovieCard key={uuid()} posterPath={movie.poster_path} id={movie.id} handleAdd={this.addToList} movie={movie}/>;
 		});
 		return (
-			<Grid columns={2} divided>
-				<Grid.Column width={5}>
-						{this.state.showFaves ? (
-							<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList}
-							clearFavoriteList={this.clearFavoriteList}
-								 />
-						) : null}
-				</Grid.Column>
-				<Grid.Column width={11}>
-					<Container>
-						<Card.Group>{movies}</Card.Group>
-					</Container>
-				</Grid.Column>
-			</Grid>
+			<DragDropContextProvider backend={HTML5Backend}>
+				<Grid columns={2} divided>
+					<Grid.Column width={5}>
+							{this.state.showFaves ? (
+								<FavoriteContainer favoriteList={this.state.favoriteList} handleRemove={this.removeFromList}
+								clearFavoriteList={this.clearFavoriteList}
+									 />
+							) : null}
+					</Grid.Column>
+					<Grid.Column width={11}>
+						<Container>
+							<Card.Group>{movies}</Card.Group>
+						</Container>
+					</Grid.Column>
+				</Grid>
+			</DragDropContextProvider>
 		);
 	}
 }
+
+export default MovieContainer
