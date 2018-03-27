@@ -18,8 +18,7 @@ export default class ListPage extends Component {
     super(props);
     this.state = {
       list: props.listToShow
-    };
-    console.log(this.state.list);
+    }
   }
 
   onDragEnd = result => {
@@ -41,9 +40,9 @@ export default class ListPage extends Component {
     }, () => console.log(this.state.list));
   };
 
+  
+
   updateList = () => {
-    console.log(this.state.list.id);
-    console.log(JSON.stringify(this.state.list));
     let options = {
       method: "PATCH",
       headers: {
