@@ -119,7 +119,8 @@ class App extends Component {
             render={() => <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList}/>}
           />
         <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists}/>} />
-					{this.state.userLists.length > 0 ? (
+
+        {this.state.userLists.length > 0 ? (
           <Route
             exact
             path="/lists/:id"
@@ -135,6 +136,20 @@ class App extends Component {
               return <ListPage listToShow={foundList} />;
             }}
           />): null}
+
+          <Route exact path="/lists/:id/update" render={renderProps => {
+              let id = renderProps.match.params.id;
+              let foundList = this.state.userLists.find(list => {
+                return list.id === parseInt(id);
+
+              });
+              // console.log(foundList);
+              return (
+                <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToUpdate={foundList} />
+              )
+
+            }}/>
+
         </Switch>
       </div>
     );

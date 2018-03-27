@@ -2,11 +2,24 @@ import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 
 export default class FavoriteForm extends Component {
-	state = {
-		name:"",
-		message:null,
-		createdListTitle: ""
-	};
+	constructor(props){
+		super(props);
+		this.state = {
+			name: this.props.listToUpdate ? this.props.listToUpdate.title : "",
+			message: null,
+			createdListTitle: ""
+		};
+		console.log(props);
+	}
+
+	// componentWillReceiveProps = (nextProps) => {
+	// 	if (nextProps.updateList) {
+	// 		console.log(nextProps.updateList);
+	// 		this.setState({
+	// 			name: this.props.updateList.title
+	// 		})
+	// 	}
+	// }
 
 	postList = () => {
 		let body = {title: this.state.name, movies: this.props.favoriteList}
@@ -48,7 +61,7 @@ export default class FavoriteForm extends Component {
 			<div>
 				<Form onSubmit={this.postList}>
 					<Form.Field>
-						<label>New List</label>
+						{this.props.listToUpdate ? <label>Update List</label> : <label>New List</label>}
 						<Form.Input placeholder="name your list" onChange={this.handleChange} name="name" value={this.state.name}/>
 					</Form.Field>
 					<Button type="submit">Submit</Button>
