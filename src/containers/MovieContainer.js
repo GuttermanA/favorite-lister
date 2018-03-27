@@ -155,7 +155,7 @@ export default class MovieContainer extends Component {
 								{provided.placeholder}
 						    </div>
 						  )}
-						</Droppable>;
+						</Droppable>
 					</Grid.Column>
 				</Grid>
 			</DragDropContext>

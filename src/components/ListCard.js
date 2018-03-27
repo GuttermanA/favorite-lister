@@ -3,6 +3,7 @@ import { Card, List } from 'semantic-ui-react'
 import uuid from "uuid";
 
 const ListCard = (props) => {
+  console.log("List card", props.list);
   const {title, updated_at} = props.list
   const movieTitles = props.list.movies.map(movie => <List.Item as='li' key={uuid()}>{movie.title}</List.Item>)
   return (

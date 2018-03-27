@@ -49,3 +49,8 @@
   display: flex;
   flex-flow: row wrap;
 }
+
+.moviePosterSize {
+  width: 50%;
+  height: auto;
+}
