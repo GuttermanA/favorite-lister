@@ -1,30 +1,49 @@
-import React from 'react'
-import { Card, List } from 'semantic-ui-react'
+import React from "react";
+import MovieCard from "./MovieCard.js";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+
+import { Card, List } from "semantic-ui-react";
 import uuid from "uuid";
 
-const ListPage = (props) => {
-  console.log("List page", props.listToShow);
-  const {title, updated_at} = props.listToShow
-  const movieTitles = props.listToShow.movies.map(movie => <List.Item as='li' key={uuid()}>{movie.title}</List.Item>)
-  return (
-    <Card>
-      <Card.Content>
-        <Card.Header>
-          {title}
-        </Card.Header>
-        <Card.Meta>
-          <span className='date'>
-            {updated_at}
-          </span>
-        </Card.Meta>
-        <Card.Description>
-          <List as='ol'>
-            {movieTitles}
-          </List>
-        </Card.Description>
-      </Card.Content>
-    </Card>
-  )
-}
+const ListPage = props => {
 
-export default ListPage
+  const onDragEnd = (result) => {
+    console.log(result);
+  };
+
+  const getListStyle = isDraggingOver => ({
+      display: 'flex',
+      // padding: this.props.favoriteList.length,
+      // minHeight: this.state.height
+    });
+
+  console.log("List page", props.listToShow);
+  const { title, updated_at } = props.listToShow;
+  const movies = props.listToShow.movies.map((movie, index) => (
+    <MovieCard key={uuid()} movie={movie} index={index} id={movie.id} />
+  ));
+  return (
+    <DragDropContext
+      onDragEnd={onDragEnd}
+    >
+    <Droppable direction="horizontal" droppableId="listcard" type="MOVIE" ignoreContainerClipping>
+      {(provided, snapshot) => (
+
+        <div
+          ref={provided.innerRef}
+          style={getListStyle(snapshot.isDraggingOver)}
+          {...provided.droppableProps}
+          {...provided.dragHandleProps}
+        >
+  {movies}
+  {provided.placeholder}
+</div>
+
+)}
+</Droppable>
+</DragDropContext>
+  );
+};
+
+export default ListPage;
