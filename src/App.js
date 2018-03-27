@@ -19,13 +19,13 @@ class App extends Component {
     this.fetchList();
   }
 
-  fetchList() {
+  fetchList = () => {
     fetch("http://localhost:4000/lists")
       .then(res => res.json())
       .then(response =>
         this.setState({
           userLists: response
-        })
+        },() => console.log(this.state.userLists))
       );
     // console.log(response))
   }
@@ -37,7 +37,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar search={this.search} searchTerm={this.state.searchTerm} />
+        <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
@@ -45,17 +45,20 @@ class App extends Component {
             path="/results"
             render={() => <MovieContainer searchTerm={this.state.searchTerm} />}
           />
-          <Route exact path="/lists" component={UserLists} />
+        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists}/>} />
 					{this.state.userLists.length > 0 ? (
           <Route
             exact
-            path="/lists/:title"
+            path="/lists/:id"
             render={renderProps => {
-              let title = renderProps.match.params.title;
-              // console.log("renderProps", renderProps.match.params.id);
+              let id = renderProps.match.params.id;
+
+
               let foundList = this.state.userLists.find(list => {
-                return list.title === title;
+                return list.id === parseInt(id);
+
               });
+              console.log(foundList);
               return <ListPage listToShow={foundList} />;
             }}
           />): null}

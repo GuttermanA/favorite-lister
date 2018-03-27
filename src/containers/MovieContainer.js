@@ -96,11 +96,17 @@ export default class MovieContainer extends Component {
   }
   onDragEnd = (result) => {
 		// console.log(result);
-		if (!result.destination || result.destination.droppableId !== "list") {
+		if ((!result.destination && result.source.droppableId === "search-results")) {
       return;
     }
 
 		if (result.source.droppableId === "list") {
+      if (result.destination === null) {
+        let foundMovie = this.state.movies.find(movie => movie.id === parseInt(result.draggableId.split("-")[1]))
+        console.log(result.draggableId.split("-")[1], foundMovie);
+        this.removeFromList(foundMovie)
+        return
+      }
 			const favoriteList = reorder(
 	      this.state.favoriteList,
 	      result.source.index,

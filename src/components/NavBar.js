@@ -12,7 +12,12 @@ export default class NavBar extends Component {
     searchTerm: "",
    }
 
-  handleItemClick = (event, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (event, { name }) => {
+    this.setState({ activeItem: name })
+      if (name === 'lists') {
+        this.props.fetchLists()
+    }
+  }
 
   handleChange = (event, { value }) => this.setState({ searchTerm: value })
 

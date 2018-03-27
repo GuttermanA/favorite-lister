@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import uuid from "uuid";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteForm from "../components/FavoriteForm.js";
-import { Container, Segment, Card } from "semantic-ui-react";
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Card } from "semantic-ui-react";
+import { Droppable } from 'react-beautiful-dnd';
 
 
 export default class FavoriteContainer extends Component {
@@ -23,7 +23,7 @@ export default class FavoriteContainer extends Component {
 		const movies = this.props.favoriteList.map((movie, index) => {
 			let id = `movie-${movie.id}`
 			return (
-				<MovieCard key={uuid()} movie={movie} handleAdd={this.addToList} index={index} id={id}/>
+				<MovieCard key={uuid()} movie={movie} handleRemove={this.props.handleRemove} index={index} id={id}/>
 			)
 		})
 
