@@ -40,7 +40,16 @@ export default class ListPage extends Component {
     }, () => console.log(this.state.list));
   };
 
-  
+  removeFromList = movieData => {
+    let newList = this.state.list.movies.filter(movie => movie !== movieData)
+    this.setState({
+      list: {
+        ...this.state.list,
+        movies: newList
+      }
+    })
+  }
+
 
   updateList = () => {
     let options = {
@@ -61,7 +70,7 @@ export default class ListPage extends Component {
       display: "flex"
     });
     const movies = this.state.list.movies.map((movie, index) => (
-      <MovieCard key={uuid()} movie={movie} index={index} id={movie.id} />
+      <MovieCard key={uuid()} movie={movie} index={index} id={movie.id} handleRemove={this.removeFromList}/>
     ));
 
     return (

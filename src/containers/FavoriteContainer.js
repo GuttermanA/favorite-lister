@@ -18,34 +18,50 @@ export default class FavoriteContainer extends Component {
   }
 
   render() {
-    const movies = () => {
-      if (this.props.listToUpdate) {
-				return this.props.listToUpdate.movies.map((movie, index) => {
-          return (
-            <MovieCard
-              key={uuid()}
-              movie={movie}
-              handleRemove={this.props.handleRemove}
-              index={index}
-              id={movie.id}
-            />
-          );
-        });
-      } else {
-        return this.props.favoriteList.map((movie, index) => {
-          let id = `movie-${movie.id}`;
-          return (
-            <MovieCard
-              key={uuid()}
-              movie={movie}
-              handleRemove={this.props.handleRemove}
-              index={index}
-              id={id}
-            />
-          );
-        });
-      }
-    }
+
+		const movies = this.props.favoriteList.map((movie, index) => {
+			let id = `movie-${movie.id}`;
+			return (
+				<MovieCard
+					key={uuid()}
+					movie={movie}
+					handleRemove={this.props.handleRemove}
+					index={index}
+					id={id}
+				/>
+			);
+		});
+
+
+
+    // const movies = () => {
+    //   if (this.props.listToUpdate) {
+		// 		return this.props.listToUpdate.movies.map((movie, index) => {
+    //       return (
+    //         <MovieCard
+    //           key={uuid()}
+    //           movie={movie}
+    //           handleRemove={this.props.handleRemove}
+    //           index={index}
+    //           id={movie.id}
+    //         />
+    //       );
+    //     });
+    //   } else {
+    //     return this.props.favoriteList.map((movie, index) => {
+    //       let id = `movie-${movie.id}`;
+    //       return (
+    //         <MovieCard
+    //           key={uuid()}
+    //           movie={movie}
+    //           handleRemove={this.props.handleRemove}
+    //           index={index}
+    //           id={id}
+    //         />
+    //       );
+    //     });
+    //   }
+    // }
 
     const getListStyle = isDraggingOver => ({
       // background: isDraggingOver ? "lightblue" : "lightgrey",
@@ -72,8 +88,8 @@ export default class FavoriteContainer extends Component {
               {...provided.droppableProps}
               {...provided.dragHandleProps}
             >
-              {movies().length ? (
-                movies()
+              {movies.length ? (
+                movies
               ) : (
                 <Card>
                   <Card.Content>

@@ -18,11 +18,7 @@ const ListCard = props => {
         <Card.Description>{movieTitles}</Card.Description>
       </Card.Content>
 
-      <Card.Content extra>
-          <Button as={Link} to={`/lists/${id}/update`} toggle>
-            Update
-          </Button>
-      </Card.Content>
+
     </Card>
   );
 };
@@ -30,3 +26,8 @@ const ListCard = props => {
 export default ListCard;
 
 // <NavLink to={`/lists/${id}/update`}>Update</NavLink>
+// <Card.Content extra>
+//     <Button as={Link} to={`/lists/${id}/update`} toggle>
+//       Update
+//     </Button>
+// </Card.Content>
