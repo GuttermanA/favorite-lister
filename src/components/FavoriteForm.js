@@ -23,7 +23,7 @@ export default class FavoriteForm extends Component {
 	// }
 
 	postList = () => {
-		let body = {title: this.state.name, id:this.props.listToEdit.id, movies: this.props.favoriteList}
+		let body = {title: this.state.name, id:this.props.listToEdit ? this.props.listToEdit.id : "", movies: this.props.favoriteList}
 		let options = {
 			method: this.state.editingList ? "PATCH" : "POST",
 			header:{
