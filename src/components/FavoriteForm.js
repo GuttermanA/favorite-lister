@@ -41,7 +41,8 @@ export default class FavoriteForm extends Component {
 					if (!json.message.includes("Fail")) {
 						this.setState({
 							name:"",
-							createdListTitle: json.list_title
+							createdListTitle: json.list_title,
+							editingList: false
 						})
 						this.props.clearFavoriteList()
 					}
@@ -55,7 +56,8 @@ export default class FavoriteForm extends Component {
 					if (json.message === "Success") {
 						this.setState({
 							name:"",
-							createdListTitle: json.list_title
+							createdListTitle: json.list_title,
+							editingList: false
 						})
 						this.props.clearFavoriteList()
 					}

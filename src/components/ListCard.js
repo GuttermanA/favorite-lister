@@ -41,7 +41,7 @@ const ListCard = props => {
           <Button onClick={deleteList} toggle>
             Delete List
           </Button>
-          <Button as={Link} to="/results" onClick={editList} toggle>
+          <Button as={Link} to={`/lists/${props.list.id}/update`} onClick={editList} toggle>
             Edit List
           </Button>
       </Card.Content>

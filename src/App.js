@@ -120,7 +120,7 @@ class App extends Component {
   render() {
     return (
       <Container fluid>
-        <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList}/>
+        <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList} clearFavoriteList={this.clearFavoriteList}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
@@ -155,7 +155,7 @@ class App extends Component {
               });
               // console.log(foundList);
               return (
-                <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToUpdate={foundList} />
+                <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>
               )
 
             }}/>

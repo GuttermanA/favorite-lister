@@ -16,7 +16,10 @@ export default class NavBar extends Component {
     this.setState({ activeItem: name })
       if (name === 'lists') {
         this.props.fetchLists()
+    } else if (name === 'home') {
+      this.props.clearFavoriteList()
     }
+
   }
 
   handleChange = (event, { value }) => this.setState({ searchTerm: value })
