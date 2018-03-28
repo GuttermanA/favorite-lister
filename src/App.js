@@ -17,7 +17,7 @@ class App extends Component {
     userLists: [],
     showFaves: true,
     favoriteList: [],
-    listToEdit: {},
+    listToEdit: null,
     movies: []
   };
 
@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   clearFavoriteList = () => {
-    this.setState({favoriteList:[]})
+    this.setState({favoriteList:[], listToEdit:null},()=> console.log(this.state))
   }
 
   fetchMovies(searchTerm) {

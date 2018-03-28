@@ -5,11 +5,12 @@ export default class FavoriteForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: props.listToEdit !== {} ? props.listToEdit.title : "",
+			name: props.listToEdit ? props.listToEdit.title : "",
 			message: null,
+			editingList: props.listToEdit ? true : false,
 			createdListTitle: ""
 		};
-		console.log(props);
+		console.log(this.state);
 	}
 
 	// componentWillReceiveProps = (nextProps) => {
@@ -22,9 +23,9 @@ export default class FavoriteForm extends Component {
 	// }
 
 	postList = () => {
-		let body = {title: this.state.name, movies: this.props.favoriteList}
+		let body = {title: this.state.name, id:this.props.listToEdit.id, movies: this.props.favoriteList}
 		let options = {
-			method: "POST",
+			method: this.state.editingList ? "PATCH" : "POST",
 			header:{
 				"Content-type": "application/json",
 				Accept: "application/json"
@@ -32,19 +33,37 @@ export default class FavoriteForm extends Component {
 			body: JSON.stringify(body)
 
 		}
-		fetch(`http://localhost:4000/lists`, options)
-			.then(res => res.json())
-			.then(json => {
-				alert(json.message)
-				if (json.message === "Success") {
-					this.setState({
-						name:"",
-						createdListTitle: json.list_title
-					})
-					this.props.clearFavoriteList()
-				}
-			})
+		if (this.state.editingList) {
+			fetch(`http://localhost:4000/lists/${this.props.listToEdit.id}`, options)
+				.then(res => res.json())
+				.then(json => {
+					alert(json.message)
+					if (!json.message.includes("Fail")) {
+						this.setState({
+							name:"",
+							createdListTitle: json.list_title
+						})
+						this.props.clearFavoriteList()
+					}
+				})
+
+		} else {
+			fetch(`http://localhost:4000/lists`, options)
+				.then(res => res.json())
+				.then(json => {
+					alert(json.message)
+					if (json.message === "Success") {
+						this.setState({
+							name:"",
+							createdListTitle: json.list_title
+						})
+						this.props.clearFavoriteList()
+					}
+				})
+		}
 	}
+
+
 
 	handleChange = (e, { value, name }) => {
 		this.setState({
@@ -63,7 +82,7 @@ export default class FavoriteForm extends Component {
 				<Form onSubmit={this.postList}>
 					<Form.Group>
 						<Form.Input placeholder="name your list" onChange={this.handleChange} name="name" value={this.state.name}/>
-					<Form.Button type="submit" content={this.props.listToUpdate ? 'Update' : 'Create'}></Form.Button>
+					<Form.Button type="submit" content={this.state.editingList ? 'Update' : 'Create'}></Form.Button>
 				</Form.Group>
 				</Form>
 			</div>
