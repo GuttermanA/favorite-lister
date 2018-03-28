@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Icon } from 'semantic-ui-react'
 import { Draggable } from 'react-beautiful-dnd';
 
 const MovieCard = (props) => {
@@ -26,6 +26,8 @@ const MovieCard = (props) => {
           >
           <Card onClick={handleClick}>
             <Image src={poster} />
+            { props.fromWhere !== "MovieList" ? <Icon name='delete' inverted size="large" circular/> : null}
+
           </Card>
         </div>
         {provided.placeholder}

@@ -4,6 +4,8 @@ import MovieContainer from "./containers/MovieContainer";
 import HomePage from "./components/HomePage";
 import UserLists from "./components/UserLists";
 import ListPage from "./components/ListPage";
+import { Card, Container } from "semantic-ui-react";
+
 
 import { Route, Switch } from "react-router-dom";
 
@@ -109,7 +111,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <Container>
         <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -151,7 +153,7 @@ class App extends Component {
             }}/>
 
         </Switch>
-      </div>
+      </Container>
     );
   }
 }

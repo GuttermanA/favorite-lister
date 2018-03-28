@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import uuid from "uuid";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteForm from "../components/FavoriteForm.js";
-import { Card } from "semantic-ui-react";
+import { Card, Container } from "semantic-ui-react";
 import { Droppable } from "react-beautiful-dnd";
 
 export default class FavoriteContainer extends Component {
@@ -48,7 +48,8 @@ export default class FavoriteContainer extends Component {
     }
 
     const getListStyle = isDraggingOver => ({
-      background: isDraggingOver ? "lightblue" : "lightgrey",
+      // background: isDraggingOver ? "lightblue" : "lightgrey",
+			width: '100%',
       height: isDraggingOver
         ? this.setState({ height: this.state.height + 500 })
         : null,
@@ -57,7 +58,7 @@ export default class FavoriteContainer extends Component {
     });
 
     return (
-      <div>
+      <Container>
         <FavoriteForm
 					listToUpdate={this.props.listToUpdate}
           favoriteList={this.props.favoriteList}
@@ -87,7 +88,7 @@ export default class FavoriteContainer extends Component {
             </div>
           )}
         </Droppable>
-      </div>
+      </Container>
     );
   }
 }

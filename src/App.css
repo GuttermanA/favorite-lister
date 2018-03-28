@@ -1,8 +1,8 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
-.App-logo {
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
@@ -18,16 +18,19 @@
   display: flex;
   flex-flow: column;
   height: 100%;
+} */
+
+i.inverted.icon {
+  position: absolute;
 }
 
-.flex-list {
+/* .flex-list {
   min-height: 100vh;
-  /* like display:flex but will allow bleeding over the window width */
-  /* min-width: 100vw; */
-  display: inline-block;
-}
 
-.parent-container {
+  display: inline-block;
+} */
+
+/* .parent-container {
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -53,4 +56,4 @@
 .moviePosterSize {
   width: 50%;
   height: auto;
-}
+} */

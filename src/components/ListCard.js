@@ -1,32 +1,32 @@
-import React from 'react'
-import { Card, List } from 'semantic-ui-react'
+import React from "react";
+import { Card, List, Button } from "semantic-ui-react";
 import uuid from "uuid";
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom";
 
-
-const ListCard = (props) => {
-  const {title, updated_at, id} = props.list
-  const movieTitles = props.list.movies.map(movie => <List.Item as='li' key={uuid()}>{movie.title}</List.Item>)
+const ListCard = props => {
+  const { title, updated_at, id } = props.list;
+  const movieTitles = props.list.movies.map(movie => (
+    <List.Item as="li" key={uuid()}>
+      {movie.title}
+    </List.Item>
+  ));
   return (
-  <Card>
-    <Card.Content>
-      <Card.Header>
-        {title}
-      </Card.Header>
-      <Card.Meta>
-        <span className='date'>
-          {updated_at}
-        </span>
-      </Card.Meta>
-      <Card.Description>
-        <List as='ol'>
-          {movieTitles}
-        </List>
-      </Card.Description>
-    </Card.Content>
-    <NavLink to={`/lists/${id}/update`}>Update</NavLink>
-  </Card>
-  )
-}
+    <Card as={Link} to={`/lists/${props.list.id}`}>
+      <Card.Content>
+        <Card.Header>{title}</Card.Header>
+        <Card.Meta>{updated_at}</Card.Meta>
+        <Card.Description>{movieTitles}</Card.Description>
+      </Card.Content>
 
-export default ListCard
+      <Card.Content extra>
+          <Button as={Link} to={`/lists/${id}/update`} toggle>
+            Update
+          </Button>
+      </Card.Content>
+    </Card>
+  );
+};
+
+export default ListCard;
+
+// <NavLink to={`/lists/${id}/update`}>Update</NavLink>

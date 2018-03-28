@@ -56,15 +56,15 @@ export default class FavoriteForm extends Component {
 		return `/lists/${this.state.createdListTitle}`
 	}
 
+	// let myLabel = {this.props.listToUpdate ? 'Update List' : 'New List'}
 	render() {
 		return (
 			<div>
 				<Form onSubmit={this.postList}>
-					<Form.Field>
-						{this.props.listToUpdate ? <label>Update List</label> : <label>New List</label>}
+					<Form.Group>
 						<Form.Input placeholder="name your list" onChange={this.handleChange} name="name" value={this.state.name}/>
-					</Form.Field>
-					<Button type="submit">Submit</Button>
+					<Form.Button type="submit" content={this.props.listToUpdate ? 'Update' : 'Create'}></Form.Button>
+				</Form.Group>
 				</Form>
 			</div>
 

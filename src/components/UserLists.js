@@ -1,22 +1,14 @@
 import React, { Component } from "react";
-import ListCard from './ListCard'
+import ListCard from "./ListCard";
 import uuid from "uuid";
-import { Container } from "semantic-ui-react";
-import { Link } from "react-router-dom"
+import { Container, Card } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default class UserLists extends Component {
-
-
-
-	render() {
+  render() {
     const listBlock = this.props.userLists.map(list => {
-        return <Link key={uuid()} to={`/lists/${list.id}`}><ListCard key={uuid()} list={list}/></Link>
-      })
-		return (
-			<Container>
-      	{listBlock}
-			</Container>
-
-		);
-	}
+      return <ListCard key={uuid()} list={list} />;
+    });
+    return <Container><Card.Group>{listBlock}</Card.Group></Container>;
+  }
 }
