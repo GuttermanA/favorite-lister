@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MovieCard from "./MovieCard.js";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { Button } from "semantic-ui-react";
+import { Button, Header, Container } from "semantic-ui-react";
 import uuid from "uuid";
 
 const reorder = (list, startIndex, endIndex) => {
@@ -62,19 +62,22 @@ export default class ListPage extends Component {
     };
     fetch(`http://localhost:4000/lists/${this.state.list.id}`, options)
       .then(res => res.json())
-      .then(response => console.log(response));
+      .then(response => alert(response.message, "The list was updated."))
   };
 
   render() {
     const getListStyle = isDraggingOver => ({
-      display: "flex"
+      display: "flex",
+      overflow: "auto"
     });
     const movies = this.state.list.movies.map((movie, index) => (
       <MovieCard key={uuid()} movie={movie} index={index} id={movie.id} handleRemove={this.removeFromList}/>
     ));
 
     return (
+      <Container>
       <DragDropContext onDragEnd={this.onDragEnd}>
+        <Header size="huge">{this.state.list.title}</Header>
         <Droppable
           direction="horizontal"
           droppableId="listcard"
@@ -95,6 +98,7 @@ export default class ListPage extends Component {
         </Droppable>
         <Button onClick={this.updateList}>Update</Button>
       </DragDropContext>
+    </Container>
     );
   }
 }

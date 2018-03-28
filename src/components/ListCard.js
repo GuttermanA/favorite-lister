@@ -5,17 +5,38 @@ import { NavLink, Link } from "react-router-dom";
 
 const ListCard = props => {
   const { title, updated_at, id } = props.list;
+
   const movieTitles = props.list.movies.map(movie => (
     <List.Item as="li" key={uuid()}>
       {movie.title}
     </List.Item>
-  ));
+  ), () => console.log(props.list.movies));
+
+  const deleteList = (event) => {
+    event.stopPropagation();
+    let options = {
+      method: "DELETE",
+      headers: {
+        Accepts: "application/json",
+        "Content-type": "application/json"
+      }
+    };
+    fetch(`http://localhost:4000/lists/${id}`, options)
+    .then(res => res.json())
+    .then(response => props.deleteFromUserList(id))
+  }
+
   return (
-    <Card as={Link} to={`/lists/${props.list.id}`}>
+    <Card>
       <Card.Content>
-        <Card.Header>{title}</Card.Header>
+        <Card.Header as={Link} to={`/lists/${props.list.id}`}>{title}</Card.Header>
         <Card.Meta>{updated_at}</Card.Meta>
         <Card.Description>{movieTitles}</Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+          <Button onClick={deleteList} toggle>
+            Delete List
+          </Button>
       </Card.Content>
 
 

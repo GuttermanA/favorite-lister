@@ -24,6 +24,12 @@ i.inverted.icon {
   position: absolute;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
 /* .flex-list {
   min-height: 100vh;
 

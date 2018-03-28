@@ -1,8 +1,10 @@
 import React from 'react'
+import { Redirect } from "react-router-dom";
+
 
 const HomePage = () => {
   return (
-    <h1>Welcome</h1>
+    <Redirect to='/results'/>
   )
 }
 

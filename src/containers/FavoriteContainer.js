@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import uuid from "uuid";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteForm from "../components/FavoriteForm.js";
-import { Card, Container } from "semantic-ui-react";
+import { Card, Container, Segment } from "semantic-ui-react";
 import { Droppable } from "react-beautiful-dnd";
 
 export default class FavoriteContainer extends Component {
@@ -65,12 +65,15 @@ export default class FavoriteContainer extends Component {
 
     const getListStyle = isDraggingOver => ({
       // background: isDraggingOver ? "lightblue" : "lightgrey",
-			width: '100%',
+			// width: '100%',
       height: isDraggingOver
         ? this.setState({ height: this.state.height + 500 })
         : null,
-      padding: this.props.favoriteList.length,
-      minHeight: this.state.height
+      // padding: this.props.favoriteList.length,
+      minHeight: this.state.height,
+			margin: 'auto',
+		  width: '50%',
+		  padding: '10px'
     });
 
     return (
@@ -80,9 +83,10 @@ export default class FavoriteContainer extends Component {
           favoriteList={this.props.favoriteList}
           clearFavoriteList={this.props.clearFavoriteList}
         />
-        <Droppable droppableId="list" type="MOVIE" ignoreContainerClipping>
+        <Droppable droppableId="list" type="MOVIE" ignoreContainerClipping >
           {(provided, snapshot) => (
             <div
+							className='center'
               ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
@@ -91,7 +95,7 @@ export default class FavoriteContainer extends Component {
               {movies.length ? (
                 movies
               ) : (
-                <Card>
+                <Card style={{maxWidth: 'none'}}>
                   <Card.Content>
                     <Card.Header>Add Movies</Card.Header>
                     <Card.Description>

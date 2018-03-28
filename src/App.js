@@ -13,29 +13,11 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    searchTerm: "",
+    searchTerm: "Love",
     userLists: [],
     showFaves: true,
     favoriteList: [],
-    movies: [
-      {
-        vote_count: 7331,
-        id: 1891,
-        video: false,
-        vote_average: 8.3,
-        title: "The Empire Strikes Back",
-        popularity: 21.629623,
-        poster_path: "/6u1fYtxG5eqjhtCPDx04pJphQRW.jpg",
-        original_language: "en",
-        original_title: "The Empire Strikes Back",
-        genre_ids: [12, 28, 878],
-        backdrop_path: "/amYkOxCwHiVTFKendcIW0rSrRlU.jpg",
-        adult: false,
-        overview:
-          "The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
-        release_date: "1980-05-20"
-      }
-    ]
+    movies: []
   };
 
   addToList = movieData => {
@@ -64,7 +46,7 @@ class App extends Component {
       )
         .then(res => res.json())
         .then(movies =>
-          this.setState({ movies: movies.results })
+          this.setState({ movies: movies.results.filter(movie => movie.poster_path !== null)})
         );
     }
   }
@@ -81,9 +63,18 @@ class App extends Component {
 
   /////////
 
-  componentDidMount() {
-    this.fetchList();
+  homeFetch() {
+    fetch(
+      `http://localhost:4000/default`
+    )
+      .then(res => res.json())
+      .then(movies =>
+        this.setState({ movies: movies.results })
+      );
+  }
 
+  componentDidMount() {
+    this.homeFetch()
   }
 
   fetchList = () => {
@@ -92,7 +83,7 @@ class App extends Component {
       .then(response =>
         this.setState({
           userLists: response
-        },() => console.log(this.state.userLists))
+        },() => console.log("userListsApp", response, this.state.userLists))
       );
     // console.log(response))
   }
@@ -106,12 +97,19 @@ class App extends Component {
   updateFavoriteList = (newArray) => {
     this.setState({
     	favoriteList: newArray
+    }, () => console.log("updateFavList", newArray))
+  }
+
+  deleteFromUserList = (id) => {
+    const newUserList = this.state.userLists.filter(list => list.id !== parseInt(id))
+    this.setState({
+      userLists: newUserList
     })
   }
 
   render() {
     return (
-      <Container>
+      <Container fluid>
         <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -120,7 +118,7 @@ class App extends Component {
             path="/results"
             render={() => <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList}/>}
           />
-        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists}/>} />
+        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList}/>} />
 
         {this.state.userLists.length > 0 ? (
           <Route

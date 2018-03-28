@@ -55,6 +55,9 @@ export default class MovieContainer extends Component {
   };
 
   render() {
+    const getListStyle = isDraggingOver => ({
+      display: "flex"
+    });
     const movies = this.props.movies.map((movie, index) => {
       return (
         <MovieCard
@@ -75,21 +78,24 @@ export default class MovieContainer extends Component {
       >
         <Grid>
           <Grid.Column width={5}>
-            <Segment>
               <FavoriteContainer
                 listToUpdate={this.props.listToUpdate}
                 favoriteList={this.props.favoriteList}
                 handleRemove={this.props.removeFromList}
                 clearFavoriteList={this.props.clearFavoriteList}
               />
-            </Segment>
           </Grid.Column>
 
           <Grid.Column width={11}>
             <Segment basic>
             <Droppable droppableId="search-results" type="MOVIE" isDropDisabled>
               {(provided, snapshot) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+                <div
+                  ref={provided.innerRef}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                  {...provided.droppableProps}
+                  {...provided.dragHandleProps}
+                >
                   <Card.Group itemsPerRow={4}>
                     {movies}
                   {provided.placeholder}

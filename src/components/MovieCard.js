@@ -10,7 +10,7 @@ const MovieCard = (props) => {
   let handleClick = () => {
     if (props.handleAdd) {
       props.handleAdd(props.movie)
-    } 
+    }
   }
 
   let handleDelete = (e) => {
@@ -27,7 +27,7 @@ const MovieCard = (props) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-          <Card onClick={handleClick}>
+          <Card onClick={handleClick} style={{maxWidth: 'none'}}>
             <Image src={poster} />
             { props.fromWhere !== "MovieList" ? <Icon name='delete' inverted size="large" circular onClick={handleDelete}/> : null}
 

@@ -59,7 +59,7 @@ export default class FavoriteForm extends Component {
 	// let myLabel = {this.props.listToUpdate ? 'Update List' : 'New List'}
 	render() {
 		return (
-			<div>
+			<div className='center'>
 				<Form onSubmit={this.postList}>
 					<Form.Group>
 						<Form.Input placeholder="name your list" onChange={this.handleChange} name="name" value={this.state.name}/>
