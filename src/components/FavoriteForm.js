@@ -5,7 +5,7 @@ export default class FavoriteForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: this.props.listToUpdate ? this.props.listToUpdate.title : "",
+			name: props.listToEdit !== {} ? props.listToEdit.title : "",
 			message: null,
 			createdListTitle: ""
 		};

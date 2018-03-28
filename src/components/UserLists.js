@@ -10,7 +10,7 @@ export default class UserLists extends Component {
 
   render() {
     const listBlock = this.props.userLists.map(list => {
-      return <ListCard key={uuid()} list={list} deleteFromUserList={this.props.deleteFromUserList} />;
+      return <ListCard key={uuid()} list={list} deleteFromUserList={this.props.deleteFromUserList} editList={this.props.editList}/>;
     });
     return <Container><Card.Group>{listBlock}</Card.Group></Container>;
   }

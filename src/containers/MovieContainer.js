@@ -83,6 +83,7 @@ export default class MovieContainer extends Component {
                 favoriteList={this.props.favoriteList}
                 handleRemove={this.props.removeFromList}
                 clearFavoriteList={this.props.clearFavoriteList}
+                listToEdit={this.props.listToEdit}
               />
           </Grid.Column>
 

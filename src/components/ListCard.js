@@ -26,6 +26,10 @@ const ListCard = props => {
     .then(response => props.deleteFromUserList(id))
   }
 
+  const editList = () => {
+    props.editList(props.list)
+  }
+
   return (
     <Card>
       <Card.Content>
@@ -36,6 +40,9 @@ const ListCard = props => {
       <Card.Content extra>
           <Button onClick={deleteList} toggle>
             Delete List
+          </Button>
+          <Button as={Link} to="/results" onClick={editList} toggle>
+            Edit List
           </Button>
       </Card.Content>
 

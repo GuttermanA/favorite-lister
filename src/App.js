@@ -17,6 +17,7 @@ class App extends Component {
     userLists: [],
     showFaves: true,
     favoriteList: [],
+    listToEdit: {},
     movies: []
   };
 
@@ -100,6 +101,15 @@ class App extends Component {
     }, () => console.log("updateFavList", newArray))
   }
 
+  editList = (list) => {
+    console.log(list)
+    this.setState({
+      ...this.state,
+      favoriteList: list.movies,
+      listToEdit: {id: list.id, title: list.title}
+    },()=> console.log(this.state))
+  }
+
   deleteFromUserList = (id) => {
     const newUserList = this.state.userLists.filter(list => list.id !== parseInt(id))
     this.setState({
@@ -116,9 +126,9 @@ class App extends Component {
           <Route
             exact
             path="/results"
-            render={() => <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList}/>}
+            render={() => <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>}
           />
-        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList}/>} />
+        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList} editList={this.editList}/>}/>
 
         {this.state.userLists.length > 0 ? (
           <Route

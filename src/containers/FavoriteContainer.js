@@ -82,6 +82,7 @@ export default class FavoriteContainer extends Component {
 					listToUpdate={this.props.listToUpdate}
           favoriteList={this.props.favoriteList}
           clearFavoriteList={this.props.clearFavoriteList}
+					listToEdit={this.props.listToEdit}
         />
         <Droppable droppableId="list" type="MOVIE" ignoreContainerClipping >
           {(provided, snapshot) => (
