@@ -60,7 +60,7 @@ export default class ListPage extends Component {
       },
       body: JSON.stringify(this.state.list)
     };
-    fetch(`http://localhost:4000/lists/${this.state.list.id}`, options)
+    fetch(`https://favorite-lister-backend.herokuapp.com/lists/${this.state.list.id}`, options)
       .then(res => res.json())
       .then(response => alert(response.message, "The list was updated."))
   };

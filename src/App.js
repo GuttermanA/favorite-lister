@@ -43,7 +43,7 @@ class App extends Component {
   fetchMovies(searchTerm) {
     if (searchTerm) {
       fetch(
-        `http://localhost:4000/search?${this.generateSearchParams(searchTerm)}`
+        `https://favorite-lister-backend.herokuapp.com/search?${this.generateSearchParams(searchTerm)}`
       )
         .then(res => res.json())
         .then(movies =>
@@ -66,7 +66,7 @@ class App extends Component {
 
   homeFetch() {
     fetch(
-      `http://localhost:4000/default`
+      `https://favorite-lister-backend.herokuapp.com/default`
     )
       .then(res => res.json())
       .then(movies =>
@@ -79,7 +79,7 @@ class App extends Component {
   }
 
   fetchList = () => {
-    fetch("http://localhost:4000/lists")
+    fetch("https://favorite-lister-backend.herokuapp.com/lists")
       .then(res => res.json())
       .then(response =>
         this.setState({

@@ -21,7 +21,7 @@ const ListCard = props => {
         "Content-type": "application/json"
       }
     };
-    fetch(`http://localhost:4000/lists/${id}`, options)
+    fetch(`https://favorite-lister-backend.herokuapp.com/lists/${id}`, options)
     .then(res => res.json())
     .then(response => props.deleteFromUserList(id))
   }

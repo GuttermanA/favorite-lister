@@ -34,7 +34,7 @@ export default class FavoriteForm extends Component {
 
 		}
 		if (this.state.editingList) {
-			fetch(`http://localhost:4000/lists/${this.props.listToEdit.id}`, options)
+			fetch(`https://favorite-lister-backend.herokuapp.com/lists/${this.props.listToEdit.id}`, options)
 				.then(res => res.json())
 				.then(json => {
 					alert(json.message)
@@ -49,7 +49,7 @@ export default class FavoriteForm extends Component {
 				})
 
 		} else {
-			fetch(`http://localhost:4000/lists`, options)
+			fetch(`https://favorite-lister-backend.herokuapp.com/lists`, options)
 				.then(res => res.json())
 				.then(json => {
 					alert(json.message)
