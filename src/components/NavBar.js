@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-  Container,
   Menu,
   Input,
 } from 'semantic-ui-react'
@@ -38,14 +37,14 @@ export default class NavBar extends Component {
           pointing
           size='large'
         >
-          <Container>
+
             <Menu.Item as={NavLink} exact to="/" name='home' onClick={this.handleItemClick} />
             <Menu.Item as={NavLink} exact to="/lists" name='lists' onClick={this.handleItemClick} />
             <Menu.Item position='right'>
               <Input icon='search' placeholder='Movie name...' value={this.state.searchTerm} onChange={this.handleChange}/>
               <NavLink className="ui button" exact to="/results" onClick={this.handleSearch}>Search</NavLink>
             </Menu.Item>
-          </Container>
+
         </Menu>
     )
   }

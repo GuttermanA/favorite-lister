@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, List, Button } from "semantic-ui-react";
 import uuid from "uuid";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ListCard = props => {
   const { title, updated_at, id } = props.list;

@@ -66,9 +66,7 @@ export default class FavoriteContainer extends Component {
     const getListStyle = isDraggingOver => ({
       // background: isDraggingOver ? "lightblue" : "lightgrey",
 			// width: '100%',
-      height: isDraggingOver
-        ? this.setState({ height: this.state.height + 500 })
-        : null,
+      height: isDraggingOver ? this.setState({ height: this.state.height + 500 }) : null,
       // padding: this.props.favoriteList.length,
       minHeight: this.state.height,
 			margin: 'auto',
@@ -77,7 +75,7 @@ export default class FavoriteContainer extends Component {
     });
 
     return (
-      <Container>
+      <Container >
         <FavoriteForm
 					listToUpdate={this.props.listToUpdate}
           favoriteList={this.props.favoriteList}
