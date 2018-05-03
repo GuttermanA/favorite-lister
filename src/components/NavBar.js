@@ -13,9 +13,7 @@ export default class NavBar extends Component {
 
   handleItemClick = (event, { name }) => {
     this.setState({ activeItem: name })
-      if (name === 'lists') {
-        this.props.fetchLists()
-    } else if (name === 'home') {
+    if (name === 'home') {
       this.props.clearFavoriteList()
     }
 

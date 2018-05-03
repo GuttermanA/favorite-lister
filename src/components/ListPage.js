@@ -2,16 +2,39 @@ import React, { Component } from "react";
 import MovieCard from "./MovieCard.js";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { reorder } from '../globalFunctions'
-import { Button, Header, Container } from "semantic-ui-react";
+import { Button, Header, Container, Segment, Divider } from "semantic-ui-react";
+import { withRouter } from 'react-router-dom'
 import uuid from "uuid";
 
 
 
-export default class ListPage extends Component {
+class ListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       list: props.listToShow
+    }
+  }
+
+  fetchList = (listId) => {
+    fetch(`https://favorite-lister-backend.herokuapp.com/lists/${listId}`)
+      .then(res => res.json())
+      .then(response => {
+          if (response.message) {
+            alert(response.message)
+            this.props.history.push("/lists")
+          } else {
+            this.setState({
+              list: response,
+            })
+          }
+        }
+      );
+    }
+
+  componentDidMount() {
+    if (!this.state.list) {
+      this.fetchList(this.props.match.params.id)
     }
   }
 
@@ -60,18 +83,24 @@ export default class ListPage extends Component {
   };
 
   render() {
-    const getListStyle = isDraggingOver => ({
+    const style = isDraggingOver => ({
       display: "flex",
-      overflow: "auto"
+      overflow: "auto",
+      // width: '50%',
+      // margin: "auto",
     });
-    const movies = this.state.list.movies.map((movie, index) => (
-      <MovieCard key={uuid()} movie={movie} index={index} id={movie.id} handleRemove={this.removeFromList}/>
-    ));
+    const movies = this.state.list ? this.state.list.movies.map((movie, index) => (<MovieCard key={uuid()} movie={movie} index={index} id={movie.id} handleRemove={this.removeFromList}/>)) : null;
 
     return (
-      <Container>
+      <Container as={Segment} basic fluid>
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Header size="huge">{this.state.list.title}</Header>
+        <Header size="huge" >List: {this.state.list && this.state.list.title}</Header>
+        <Button.Group>
+          <Button onClick={this.updateList} >Save Changes</Button>
+          <Button onClick={this.props.history.goBack} >Return to Lists</Button>
+        </Button.Group>
+
+        <Divider hidden />
         <Droppable
           direction="horizontal"
           droppableId="listcard"
@@ -81,7 +110,7 @@ export default class ListPage extends Component {
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
+              style={style(snapshot.isDraggingOver)}
               {...provided.droppableProps}
               {...provided.dragHandleProps}
             >
@@ -90,9 +119,11 @@ export default class ListPage extends Component {
             </div>
           )}
         </Droppable>
-        <Button onClick={this.updateList}>Update</Button>
+
       </DragDropContext>
     </Container>
     );
   }
 }
+
+export default withRouter(ListPage)

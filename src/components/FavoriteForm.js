@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import { Form } from "semantic-ui-react";
 
-export default class FavoriteForm extends Component {
+ class FavoriteForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -35,6 +36,7 @@ export default class FavoriteForm extends Component {
 							editingList: false
 						})
 						this.props.clearFavoriteList()
+						this.props.history.push('/lists')
 					}
 				})
 
@@ -50,6 +52,7 @@ export default class FavoriteForm extends Component {
 							editingList: false
 						})
 						this.props.clearFavoriteList()
+						this.props.history.push('/lists')
 					}
 				})
 		}
@@ -81,3 +84,5 @@ export default class FavoriteForm extends Component {
 		);
 	}
 }
+
+export default withRouter(FavoriteForm)

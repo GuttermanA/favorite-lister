@@ -23,8 +23,16 @@ class App extends Component {
     loading: false,
   };
 
+  componentDidMount() {
+    console.log("mounting app");
+    this.homeFetch()
+    this.fetchLists()
+  }
+
   addToList = movieData => {
-    if (!this.state.favoriteList.includes(movieData)) {
+    console.log("adding to list");
+    const favoriteListTitles = this.state.favoriteList.map(movie => movie.title)
+    if (!favoriteListTitles.includes(movieData.title)) {
       this.setState({
         favoriteList: [...this.state.favoriteList, movieData]
       })
@@ -78,11 +86,9 @@ class App extends Component {
       );
   }
 
-  componentDidMount() {
-    this.homeFetch()
-  }
 
-  fetchList = () => {
+
+  fetchLists = () => {
     this.setState({loading: true})
     fetch("https://favorite-lister-backend.herokuapp.com/lists")
       .then(res => res.json())
@@ -123,7 +129,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList} clearFavoriteList={this.clearFavoriteList}/>
+        <NavBar search={this.search} searchTerm={this.state.searchTerm} clearFavoriteList={this.clearFavoriteList}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={AboutPage} />
@@ -135,14 +141,15 @@ class App extends Component {
                             addToList={this.addToList}
                             removeFromList={this.removeFromList}
                             movies={this.state.movies}
-                            favoriteList={this.state.favoriteList} 
+                            favoriteList={this.state.favoriteList}
                             updateFavoriteList={this.updateFavoriteList}
                             clearFavoriteList={this.clearFavoriteList}
                             listToEdit={this.state.listToEdit}
+                            loading={this.state.loading}
                           />
                         }
           />
-          <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList} editList={this.editList}/>}/>
+          <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList} editList={this.editList} fetchLists={this.fetchLists}/>}/>
           <Route
             exact
             path="/lists/:id"
@@ -151,7 +158,9 @@ class App extends Component {
               let foundList = this.state.userLists.find(list => {
                 return list.id === parseInt(id, 10);
               });
-              return <ListPage listToShow={foundList} />;
+              return <ListPage listToShow={foundList}/>;
+
+
             }}
           />
 

@@ -20,7 +20,7 @@ export default class FavoriteContainer extends Component {
   render() {
 
 		const movies = this.props.favoriteList.map((movie, index) => {
-			let id = `movie-${movie.id}`;
+			let id = `${movie.title}-${movie.id}-list`;
 			return (
 				<MovieCard
 					key={uuid()}

@@ -2,20 +2,21 @@ import React, { Component } from "react";
 import MovieCard from "../components/MovieCard.js";
 import FavoriteContainer from "./FavoriteContainer";
 import uuid from "uuid";
-import { reorder } from "../globalFunctions"
-import { Card, Grid, } from "semantic-ui-react";
+// import { reorder } from "../globalFunctions"
+import { Card, Grid, Dimmer, Loader } from "semantic-ui-react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Redirect } from "react-router-dom";
 
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 export default class MovieContainer extends Component {
-
-  state = {
-    redirect: false,
-  }
-
-  handleRedirect = () => {
-    this.setState({ redirect: true })
-  }
 
   onDragEnd = result => {
     if (!result.destination && result.source.droppableId === "search-results") {
@@ -24,9 +25,7 @@ export default class MovieContainer extends Component {
 
     if (result.source.droppableId === "list") {
       if (result.destination === null) {
-        let foundMovie = this.props.movies.find(
-          movie => movie.id === parseInt(result.draggableId.split("-")[1], 10)
-        );
+        let foundMovie = this.props.movies.find(movie => movie.title === result.draggableId.split("-")[0]);
         this.props.removeFromList(foundMovie);
         return;
       }
@@ -38,10 +37,9 @@ export default class MovieContainer extends Component {
 
       this.props.updateFavoriteList(favoriteList);
     } else if (result.source.droppableId === "search-results") {
-      let foundMovie = this.props.movies.find(
-        movie => movie.id === result.draggableId
-      );
-      if (!this.props.favoriteList.includes(foundMovie)) {
+      let foundMovie = this.props.movies.find(movie => movie.title === result.draggableId.split("-")[0]);
+      const favoriteListTitles = this.props.favoriteList.map(movie => movie.title)
+      if (!favoriteListTitles.includes(foundMovie.title)) {
         let newArray = [...this.props.favoriteList];
         newArray.splice(result.destination.index, 0, foundMovie);
 
@@ -61,18 +59,18 @@ export default class MovieContainer extends Component {
           movie={movie}
           handleAdd={this.props.addToList}
           index={index}
-          id={movie.id}
+          id={`${movie.title}-${movie.id}-search`}
           fromWhere={'MovieList'}
         />
       );
     });
-    if (this.state.redirect) {
-      return <Redirect exact to={`/lists/${this.props.listToUpdate.id}`} />
-    } else {
       return (
         <DragDropContext
           onDragEnd={this.onDragEnd}
         >
+        <Dimmer active={this.props.loading}>
+          <Loader />
+        </Dimmer>
           <Grid columns={2} >
             <Grid.Row>
               <Grid.Column  computer={4} widescreen={3} tablet={3}>
@@ -83,7 +81,6 @@ export default class MovieContainer extends Component {
                   handleRemove={this.props.removeFromList}
                   clearFavoriteList={this.props.clearFavoriteList}
                   listToEdit={this.props.listToEdit}
-                  handleRedirect={this.handleRedirect}
                 />
               }
 
@@ -112,7 +109,7 @@ export default class MovieContainer extends Component {
           </Grid>
         </DragDropContext>
       );
-    }
+
 
 
   }
