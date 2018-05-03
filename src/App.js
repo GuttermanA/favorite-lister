@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import MovieContainer from "./containers/MovieContainer";
+import HomePage from "./components/HomePage";
 import AboutPage from "./components/AboutPage";
+import NotFoundPage from "./components/NotFoundPage"
 import UserLists from "./components/UserLists";
 import ListPage from "./components/ListPage";
-import { Card, Container } from "semantic-ui-react";
 
 
 import { Route, Switch } from "react-router-dom";
@@ -18,7 +19,8 @@ class App extends Component {
     showFaves: true,
     favoriteList: [],
     listToEdit: null,
-    movies: []
+    movies: [],
+    loading: false,
   };
 
   addToList = movieData => {
@@ -42,12 +44,13 @@ class App extends Component {
 
   fetchMovies(searchTerm) {
     if (searchTerm) {
+      this.setState({loading: true})
       fetch(
         `https://favorite-lister-backend.herokuapp.com/search?${this.generateSearchParams(searchTerm)}`
       )
         .then(res => res.json())
         .then(movies =>
-          this.setState({ movies: movies.results.filter(movie => movie.poster_path !== null)})
+          this.setState({ loading: false, movies: movies.results.filter(movie => movie.poster_path !== null)})
         );
     }
   }
@@ -65,12 +68,13 @@ class App extends Component {
   /////////
 
   homeFetch() {
+    this.setState({loading: true})
     fetch(
       `https://favorite-lister-backend.herokuapp.com/default`
     )
       .then(res => res.json())
       .then(movies =>
-        this.setState({ movies: movies.results })
+        this.setState({loading: false, movies: movies.results })
       );
   }
 
@@ -79,18 +83,18 @@ class App extends Component {
   }
 
   fetchList = () => {
+    this.setState({loading: true})
     fetch("https://favorite-lister-backend.herokuapp.com/lists")
       .then(res => res.json())
       .then(response =>
         this.setState({
-          userLists: response
-        },() => console.log("userListsApp", response, this.state.userLists))
+          userLists: response,
+          loading: false,
+        })
       );
-    // console.log(response))
   }
 
   search = searchTerm => {
-    console.log(searchTerm);
     this.setState({ searchTerm });
     this.fetchMovies(searchTerm);
   };
@@ -98,20 +102,19 @@ class App extends Component {
   updateFavoriteList = (newArray) => {
     this.setState({
     	favoriteList: newArray
-    }, () => console.log("updateFavList", newArray))
+    })
   }
 
   editList = (list) => {
-    console.log(list)
     this.setState({
       ...this.state,
       favoriteList: list.movies,
       listToEdit: {id: list.id, title: list.title}
-    },()=> console.log(this.state))
+    })
   }
 
   deleteFromUserList = (id) => {
-    const newUserList = this.state.userLists.filter(list => list.id !== parseInt(id))
+    const newUserList = this.state.userLists.filter(list => list.id !== parseInt(id, 10))
     this.setState({
       userLists: newUserList
     })
@@ -119,49 +122,48 @@ class App extends Component {
 
   render() {
     return (
-      <Container fluid>
+      <div>
         <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList} clearFavoriteList={this.clearFavoriteList}/>
         <Switch>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={AboutPage} />
           <Route
             exact
             path="/results"
-            render={() => <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>}
+            render={() => <MovieContainer
+                            searchTerm={this.state.searchTerm}
+                            addToList={this.addToList}
+                            removeFromList={this.removeFromList}
+                            movies={this.state.movies}
+                            favoriteList={this.state.favoriteList} 
+                            updateFavoriteList={this.updateFavoriteList}
+                            clearFavoriteList={this.clearFavoriteList}
+                            listToEdit={this.state.listToEdit}
+                          />
+                        }
           />
-        <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList} editList={this.editList}/>}/>
-
-        {this.state.userLists.length > 0 ? (
+          <Route exact path="/lists" render={()=> <UserLists userLists={this.state.userLists} deleteFromUserList={this.deleteFromUserList} editList={this.editList}/>}/>
           <Route
             exact
             path="/lists/:id"
             render={renderProps => {
               let id = renderProps.match.params.id;
-
-
               let foundList = this.state.userLists.find(list => {
-                return list.id === parseInt(id);
-
+                return list.id === parseInt(id, 10);
               });
-              console.log(foundList);
               return <ListPage listToShow={foundList} />;
             }}
-          />): null}
+          />
 
           <Route exact path="/lists/:id/update" render={renderProps => {
-              let id = renderProps.match.params.id;
-              let foundList = this.state.userLists.find(list => {
-                return list.id === parseInt(id);
-
-              });
-              // console.log(foundList);
               return (
                 <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>
               )
-
-            }}/>
+          }}/>
+          <Route component={NotFoundPage}/>
 
         </Switch>
-      </Container>
+      </div>
     );
   }
 }

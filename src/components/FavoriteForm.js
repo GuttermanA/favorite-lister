@@ -10,17 +10,7 @@ export default class FavoriteForm extends Component {
 			editingList: props.listToEdit ? true : false,
 			createdListTitle: ""
 		};
-		console.log(this.state);
 	}
-
-	// componentWillReceiveProps = (nextProps) => {
-	// 	if (nextProps.updateList) {
-	// 		console.log(nextProps.updateList);
-	// 		this.setState({
-	// 			name: this.props.updateList.title
-	// 		})
-	// 	}
-	// }
 
 	postList = () => {
 		let body = {title: this.state.name, id:this.props.listToEdit ? this.props.listToEdit.id : "", movies: this.props.favoriteList}
@@ -77,7 +67,6 @@ export default class FavoriteForm extends Component {
 		return `/lists/${this.state.createdListTitle}`
 	}
 
-	// let myLabel = {this.props.listToUpdate ? 'Update List' : 'New List'}
 	render() {
 		return (
 			<div className='center'>

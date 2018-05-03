@@ -52,10 +52,3 @@ const ListCard = props => {
 };
 
 export default ListCard;
-
-// <NavLink to={`/lists/${id}/update`}>Update</NavLink>
-// <Card.Content extra>
-//     <Button as={Link} to={`/lists/${id}/update`} toggle>
-//       Update
-//     </Button>
-// </Card.Content>

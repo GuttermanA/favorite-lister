@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import MovieCard from "./MovieCard.js";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
+import { reorder } from '../globalFunctions'
 import { Button, Header, Container } from "semantic-ui-react";
 import uuid from "uuid";
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
 
-  return result;
-};
 
 export default class ListPage extends Component {
   constructor(props) {
