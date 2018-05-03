@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import MovieContainer from "./containers/MovieContainer";
-import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
 import UserLists from "./components/UserLists";
 import ListPage from "./components/ListPage";
 import { Card, Container } from "semantic-ui-react";
@@ -122,7 +122,7 @@ class App extends Component {
       <Container fluid>
         <NavBar search={this.search} searchTerm={this.state.searchTerm} fetchLists={this.fetchList} clearFavoriteList={this.clearFavoriteList}/>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/about" component={AboutPage} />
           <Route
             exact
             path="/results"

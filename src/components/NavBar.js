@@ -7,7 +7,7 @@ import {
 
 export default class NavBar extends Component {
   state = {
-    activeItem: 'home',
+    activeItem: 'about',
     searchTerm: "",
    }
 
@@ -36,9 +36,10 @@ export default class NavBar extends Component {
         <Menu inverted
           pointing
           size='large'
+          stackable
         >
 
-            <Menu.Item as={NavLink} exact to="/" name='home' onClick={this.handleItemClick} />
+            <Menu.Item as={NavLink} exact to="/about" name='about' onClick={this.handleItemClick} />
             <Menu.Item as={NavLink} exact to="/lists" name='lists' onClick={this.handleItemClick} />
             <Menu.Item position='right'>
               <Input icon='search' placeholder='Movie name...' value={this.state.searchTerm} onChange={this.handleChange}/>
