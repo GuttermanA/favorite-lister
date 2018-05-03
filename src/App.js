@@ -8,7 +8,7 @@ import UserLists from "./components/UserLists";
 import ListPage from "./components/ListPage";
 
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import "./App.css";
 
@@ -27,7 +27,17 @@ class App extends Component {
     console.log("mounting app");
     this.homeFetch()
     this.fetchLists()
+
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.history.location.pathname.includes("update") && !this.state.listToEdit && prevState.userLists.length) {
+      const foundList = this.state.userLists.find(list => list.id === parseInt(this.props.history.location.pathname.split("/")[2], 10))
+      this.editList(foundList)
+    }
+  }
+
+
 
   addToList = movieData => {
     console.log("adding to list");
@@ -113,7 +123,6 @@ class App extends Component {
 
   editList = (list) => {
     this.setState({
-      ...this.state,
       favoriteList: list.movies,
       listToEdit: {id: list.id, title: list.title}
     })
@@ -166,7 +175,7 @@ class App extends Component {
 
           <Route exact path="/lists/:id/update" render={renderProps => {
               return (
-                <MovieContainer searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>
+                <MovieContainer editing={true} searchTerm={this.state.searchTerm} addToList={this.addToList} removeFromList={this.removeFromList} movies={this.state.movies} favoriteList={this.state.favoriteList} updateFavoriteList={this.updateFavoriteList} clearFavoriteList={this.clearFavoriteList} listToEdit={this.state.listToEdit}/>
               )
           }}/>
           <Route component={NotFoundPage}/>
@@ -177,4 +186,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

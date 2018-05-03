@@ -5,7 +5,6 @@ import uuid from "uuid";
 // import { reorder } from "../globalFunctions"
 import { Card, Grid, Dimmer, Loader } from "semantic-ui-react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Redirect } from "react-router-dom";
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -77,6 +76,7 @@ export default class MovieContainer extends Component {
               {
                 <FavoriteContainer
                   listToUpdate={this.props.listToUpdate}
+                  editing={this.props.editing}
                   favoriteList={this.props.favoriteList}
                   handleRemove={this.props.removeFromList}
                   clearFavoriteList={this.props.clearFavoriteList}

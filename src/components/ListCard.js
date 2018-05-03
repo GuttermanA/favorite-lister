@@ -4,7 +4,7 @@ import uuid from "uuid";
 import { Link } from "react-router-dom";
 
 const ListCard = props => {
-  const { title, updated_at, id } = props.list;
+  const { title, id } = props.list;
 
   const movieTitles = props.list.movies.map(movie => (
     <List.Item as="li" key={uuid()}>
@@ -23,7 +23,10 @@ const ListCard = props => {
     };
     fetch(`https://favorite-lister-backend.herokuapp.com/lists/${id}`, options)
     .then(res => res.json())
-    .then(response => props.deleteFromUserList(id))
+    .then(response => {
+      alert(`List ${title} deleted`)
+      props.deleteFromUserList(id)
+    })
   }
 
   const editList = () => {
@@ -34,7 +37,7 @@ const ListCard = props => {
     <Card>
       <Card.Content>
         <Card.Header as={Link} to={`/lists/${props.list.id}`}>{title}</Card.Header>
-        <Card.Meta>{updated_at}</Card.Meta>
+
         <Card.Description>{movieTitles}</Card.Description>
       </Card.Content>
       <Card.Content extra>
