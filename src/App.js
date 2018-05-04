@@ -24,7 +24,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log("mounting app");
     this.homeFetch()
     this.fetchLists()
 
@@ -40,7 +39,6 @@ class App extends Component {
 
 
   addToList = movieData => {
-    console.log("adding to list");
     const favoriteListTitles = this.state.favoriteList.map(movie => movie.title)
     if (!favoriteListTitles.includes(movieData.title)) {
       this.setState({
@@ -57,7 +55,7 @@ class App extends Component {
   }
 
   clearFavoriteList = () => {
-    this.setState({favoriteList:[], listToEdit:null},()=> console.log(this.state))
+    this.setState({favoriteList:[], listToEdit:null})
   }
 
   fetchMovies(searchTerm) {

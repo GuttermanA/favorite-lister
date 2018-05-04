@@ -3,7 +3,6 @@ import { Card, Image, Icon } from 'semantic-ui-react'
 import { Draggable } from 'react-beautiful-dnd';
 
 const MovieCard = (props) => {
-  // console.log("card clicked",props);
   const {poster_path} = props.movie
   let poster = `http://image.tmdb.org/t/p/w500/${poster_path}`
 
@@ -14,7 +13,6 @@ const MovieCard = (props) => {
   }
 
   let handleDelete = (e) => {
-    console.log(e);
     props.handleRemove(props.movie)
   }
 

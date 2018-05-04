@@ -10,7 +10,7 @@ const ListCard = props => {
     <List.Item as="li" key={uuid()}>
       {movie.title}
     </List.Item>
-  ), () => console.log(props.list.movies));
+  ));
 
   const deleteList = (event) => {
     event.stopPropagation();

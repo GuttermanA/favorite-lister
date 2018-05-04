@@ -54,7 +54,7 @@ class ListPage extends Component {
         ...this.state.list,
         movies: movies
       }
-    }, () => console.log(this.state.list));
+    });
   };
 
   removeFromList = movieData => {
