@@ -34,7 +34,7 @@ const AboutPage = () => {
       </p>
 
       <p>
-        <strong>Alexey Katalkin: </strong> <a href="https://github.com/Raskovan" target="_blank">Github</a> | <a href="https://www.linkedin.com/in/alexey-katalkin-945590161/" target="_blank" rel='noreferrer noopener'>LinkedIn</a>
+        <strong>Alexey Katalkin: </strong> <a href="https://github.com/Raskovan" target="_blank" rel='noreferrer noopener'>Github</a> | <a href="https://www.linkedin.com/in/alexey-katalkin-945590161/" target="_blank" rel='noreferrer noopener'>LinkedIn</a>
       </p>
 
     </Container>
