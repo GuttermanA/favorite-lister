@@ -18,7 +18,7 @@ const AboutPage = () => {
       </ul>
 
       <p>
-        The UI for adding, reording, and removing from lists is full draggable and dropped using the <a href="https://github.com/atlassian/react-beautiful-dnd" target="_blank" rel='noreferrer noopener'>react-beautiful-dnd</a> library.
+        The UI for adding, reordering, and removing from lists is full draggable and dropped using the <a href="https://github.com/atlassian/react-beautiful-dnd" target="_blank" rel='noreferrer noopener'>react-beautiful-dnd</a> library.
       </p>
 
       <p>
