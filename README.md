@@ -53,3 +53,7 @@ git push origin my-new-feature
 ## Authors
 * Alexey Katalkin - [Github Profile](https://github.com/Raskovan)
 * Alex Gutterman - [Github Profile](https://github.com/guttermana)
+
+## License
+
+MIT © Alexander Gutterman and Alexey Katalkin
