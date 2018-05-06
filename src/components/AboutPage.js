@@ -8,7 +8,7 @@ const AboutPage = () => {
 
       <Header as="h1" content="About"/>
       <p>
-        This website is a project built at Flatiron school built by Alexander Gutterman and Alexey Katalkin to demostrate an understanding of <a href="https://reactjs.org/">React.js</a> and <a href="http://guides.rubyonrails.org/api_app.html">Rails API</a>. At this website you can:
+        This website is a project built at Flatiron school built by Alexander Gutterman and Alexey Katalkin to demonstrate an understanding of <a href="https://reactjs.org/">React.js</a> and <a href="http://guides.rubyonrails.org/api_app.html">Rails API</a>. At this website you can:
       </p>
 
       <ul>
